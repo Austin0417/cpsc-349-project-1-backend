@@ -4,10 +4,12 @@ package com.example.demo.post;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import com.example.demo.user.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -50,5 +52,19 @@ public class PostService {
     public ResponseEntity<String> deleteById(long post_id) {
         repository.deletePostById(post_id);
         return ResponseEntity.ok("Post deletion success");
+    }
+
+
+    @Transactional
+    public ResponseEntity<String> updatePost(long post_id, Post post) {
+        Optional<Post> p = repository.findById(post_id);
+        if (p.isPresent()) {
+            Post selectedPost = p.get();
+            selectedPost.copy(post);
+            repository.save(selectedPost);
+            return ResponseEntity.ok("Post update was successful");
+        } else {
+            return ResponseEntity.badRequest().body("Could not complete update request for selected post");
+        }
     }
 }

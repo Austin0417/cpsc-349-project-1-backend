@@ -13,7 +13,6 @@ public class UpvoteController {
     @Autowired
     private UpvoteService service;
 
-
     @GetMapping()
     public List<Upvote> getAll() {
         return service.getAll();
@@ -22,5 +21,16 @@ public class UpvoteController {
     @PostMapping()
     public ResponseEntity<String> postUpvote(@RequestParam("user_id") long user_id, @RequestParam("post_id") long post_id) {
         return service.postUpvote(user_id, post_id);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteAll() {
+        return service.deleteAll();
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<String> userRemoveUpvoteFromPost(@RequestParam("user_id") long user_id,
+                                                           @RequestParam("post_id") long post_id) {
+        return service.userRemoveUpvoteFromPost(user_id, post_id);
     }
 }

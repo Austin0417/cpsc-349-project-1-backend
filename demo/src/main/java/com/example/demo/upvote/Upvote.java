@@ -3,6 +3,8 @@ package com.example.demo.upvote;
 
 import com.example.demo.post.Post;
 import com.example.demo.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +19,7 @@ public class Upvote {
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Post post;
 
     @ManyToOne

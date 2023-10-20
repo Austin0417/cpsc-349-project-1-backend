@@ -4,6 +4,7 @@ package com.example.demo.post;
 import com.example.demo.upvote.Upvote;
 import com.example.demo.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
@@ -29,7 +30,6 @@ public class Post {
     private User user;
 
     @OneToMany(mappedBy = "post", fetch=FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JsonIgnore
     @Nullable
     private List<Upvote> upvotes;
 
@@ -53,8 +53,13 @@ public class Post {
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public void setTextContent(String textContent) { this.textContent = textContent; }
     public void setUser(User user) { this.user = user; }
-
     public String toString() {
         return "{Title: " + title + ", Image URL: " + imageUrl + ", Content: " + textContent + "}";
+    }
+    public void copy(Post post) {
+        this.title = post.getTitle();
+        this.imageUrl = post.getImageUrl();
+        this.textContent = post.getTextContent();
+
     }
 }

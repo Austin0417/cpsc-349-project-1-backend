@@ -25,7 +25,7 @@ public class PostController {
     }
 
     @GetMapping("/find")
-    public List<Post> getUserPostsController(@RequestParam(value = "user_id") long user_id) {
+    public List<Post> getUserPostsController(@RequestParam(name = "user_id") long user_id) {
         return service.getUserPostsService(user_id);
     }
 
@@ -40,7 +40,13 @@ public class PostController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteById(@RequestParam(value="post_id") long post_id) {
+    public ResponseEntity<String> deleteById(@RequestParam(name="post_id") long post_id) {
         return service.deleteById(post_id);
     }
+
+    @PutMapping()
+    public ResponseEntity<String> updatePost(@RequestParam(name="post_id") long post_id, @RequestBody Post newPost) {
+        return service.updatePost(post_id, newPost);
+    }
+
 }

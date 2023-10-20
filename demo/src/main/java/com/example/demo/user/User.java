@@ -4,6 +4,7 @@ package com.example.demo.user;
 import com.example.demo.post.Post;
 import com.example.demo.upvote.Upvote;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -53,6 +54,8 @@ public class User {
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public List<Post> getUserPosts() { return userPosts; }
+
+    public List<Upvote> getUserUpvotes() { return userUpvotes; }
 
 
     public String toString() {
