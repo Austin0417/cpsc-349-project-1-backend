@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/upvotes")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost/"})
 public class UpvoteController {
     @Autowired
     private UpvoteService service;
