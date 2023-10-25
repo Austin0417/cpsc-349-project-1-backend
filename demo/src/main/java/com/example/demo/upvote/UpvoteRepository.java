@@ -12,4 +12,8 @@ public interface UpvoteRepository extends JpaRepository<Upvote, Long> {
     @Query("DELETE FROM Upvote u WHERE u.user.user_id=?1 AND u.post.id=?2")
     @Modifying
     public void removeUserUpvote(long user_id, long post_id);
+
+    @Query("DELETE FROM Upvote u WHERE u.post.id=?1")
+    @Modifying
+    public void onPostDeleted(long post_id);
 }

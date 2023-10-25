@@ -1,6 +1,7 @@
 package com.example.demo.post;
 
 
+import com.example.demo.upvote.UpvoteRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import com.example.demo.user.UserService;
@@ -20,6 +21,9 @@ public class PostService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UpvoteRepository upvoteRepository;
 
     @Autowired
     public PostService(PostRepository repository, UserRepository userRepository) {
@@ -49,9 +53,15 @@ public class PostService {
         return ResponseEntity.ok("DELETE posts operation success");
     }
 
+    @Transactional
     public ResponseEntity<String> deleteById(long post_id) {
-        repository.deletePostById(post_id);
-        return ResponseEntity.ok("Post deletion success");
+        Optional<Post> findPost = repository.findById(post_id);
+        if (findPost.isPresent()) {
+            upvoteRepository.onPostDeleted(post_id);
+            repository.deletePostById(post_id);
+            return ResponseEntity.ok("Post deletion success");
+        }
+        return ResponseEntity.badRequest().body("Could not process post DELETE request");
     }
 
 
