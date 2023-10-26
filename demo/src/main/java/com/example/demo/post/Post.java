@@ -22,7 +22,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_sequence")
     private long id;
     private String title;
+
+    @Column(columnDefinition = "text")
     private String imageUrl;
+
+    @Column(columnDefinition = "text")
     private String textContent;
 
     @ManyToOne(fetch = FetchType.EAGER)
